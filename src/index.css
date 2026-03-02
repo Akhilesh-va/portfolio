@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #102542;
+  /* Prussian Blue */
+  --color-primary: #f87060;
+  /* Vibrant Coral */
+  --color-secondary: #cdd7d6;
+  /* Dust Grey */
+  --color-accent: #b3a394;
+  /* Khaki Beige */
+  --color-white: #ffffff;
+
+  --font-sans: "Inter", "Roboto", "Outfit", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: white;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background-color: rgba(205, 215, 214, 0.1);
+    /* Dust Grey glass base */
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .glow-green {
+    box-shadow: 0 0 20px 2px rgba(248, 112, 96, 0.3);
+    /* Vibrant Coral glow */
+  }
+
+  .glow-violet {
+    box-shadow: 0 0 20px 2px rgba(205, 215, 214, 0.3);
+    /* Dust Grey glow */
+  }
+
+  .glow-orange {
+    box-shadow: 0 0 20px 2px rgba(179, 163, 148, 0.3);
+    /* Khaki Beige glow */
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
