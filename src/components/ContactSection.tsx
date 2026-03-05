@@ -1,24 +1,159 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Send, Github, Linkedin, Mail, Cpu } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import type { KeyboardEvent } from 'react';
+import { motion } from 'framer-motion';
+import { Terminal, Send, Github, Linkedin, Mail, Cpu, Command } from 'lucide-react';
+
+interface CommandRecord {
+    command: string;
+    output: React.ReactNode;
+}
 
 export function ContactSection() {
-    const [typedCommand, setTypedCommand] = useState('');
-    const [showResult, setShowResult] = useState(false);
-    const command = '> hire("akhilesh")';
+    const [history, setHistory] = useState<CommandRecord[]>([
+        {
+            command: 'welcome',
+            output: (
+                <div className="text-gray-300 mb-2">
+                    <span className="text-primary font-bold">Welcome to Akhilesh's Terminal OS.</span><br />
+                    Type <span className="text-secondary">'help'</span> to see available commands.
+                </div>
+            )
+        }
+    ]);
+    const [input, setInput] = useState('');
+    const [commandHistory, setCommandHistory] = useState<string[]>([]);
+    const [historyIndex, setHistoryIndex] = useState(-1);
 
+    const inputRef = useRef<HTMLInputElement>(null);
+    const scrollRef = useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to bottom of terminal
     useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            setTypedCommand(command.slice(0, index));
-            index++;
-            if (index > command.length) {
-                clearInterval(interval);
-                setTimeout(() => setShowResult(true), 800);
+        if (scrollRef.current) {
+            scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+        }
+    }, [history]);
+
+    // Keep input focused when clicking on the terminal body
+    const handleTerminalClick = () => {
+        inputRef.current?.focus();
+    };
+
+    const processCommand = (cmd: string) => {
+        const trimmedCmd = cmd.trim().toLowerCase();
+        let output: React.ReactNode = null;
+
+        switch (trimmedCmd) {
+            case 'help':
+                output = (
+                    <div className="text-gray-300 flex flex-col gap-1">
+                        <div><span className="text-primary w-20 inline-block font-bold">whoami</span> - Details about my background</div>
+                        <div><span className="text-primary w-20 inline-block font-bold">skills</span> - List of technical skills</div>
+                        <div><span className="text-primary w-20 inline-block font-bold">contact</span> - Links to get in touch</div>
+                        <div><span className="text-primary w-20 inline-block font-bold">hire</span> - Initializing connection parameters</div>
+                        <div><span className="text-primary w-20 inline-block font-bold">clear</span> - Clears the terminal</div>
+                    </div>
+                );
+                break;
+            case 'whoami':
+                output = (
+                    <div className="text-gray-300 leading-relaxed">
+                        Akhilesh Singh Maurya<br />
+                        <span className="text-secondary mb-2 inline-block">Android Systems Engineer</span><br />
+                        I specialize in building scalable, clean, and high-performance native Android applications. From complex architectural migrations (XML to Jetpack Compose) to AI-powered platform integrations, I deliver systems built to ship.
+                    </div>
+                );
+                break;
+            case 'skills':
+                output = (
+                    <div className="text-gray-300">
+                        <span className="text-primary font-bold">Languages:</span> Kotlin, XML<br />
+                        <span className="text-primary font-bold">Android Frameworks & Libraries:</span> Jetpack Compose, Android SDK, Retrofit, Hilt, Room Database, Navigation Component, LiveData/StateFlow<br />
+                        <span className="text-primary font-bold">Architecture & Concepts:</span> Clean Architecture, MVI, MVVM, Unidirectional Data Flow, RESTful APIs, SOLID Principles<br />
+                        <span className="text-primary font-bold">Tools & Platforms:</span> Cursor, Android Studio, Firebase, VScode, Version control(Git), Github<br />
+                        <span className="text-primary font-bold">Databases:</span> Room Database, Firebase
+                    </div>
+                );
+                break;
+            case 'contact':
+            case 'hire':
+                output = (
+                    <div className="flex flex-col text-gray-300 animate-in fade-in duration-500">
+                        <div className="mb-2 text-[#b3a394]">Executing profile initialization... [OK]</div>
+                        <div className="mb-4">Contact parameters loaded successfully:</div>
+
+                        <div className="flex flex-col gap-3 mb-6">
+                            <a href="mailto:akhileshbltr2002@gmail.com" className="flex items-center gap-3 hover:text-white transition-colors group cursor-pointer w-fit">
+                                <Mail size={16} className="text-secondary group-hover:text-primary transition-colors" />
+                                <span>akhileshbltr2002@gmail.com</span>
+                            </a>
+                            <a href="https://linkedin.com/in/akhileshsinghmaurya" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group cursor-pointer w-fit">
+                                <Linkedin size={16} className="text-secondary group-hover:text-primary transition-colors" />
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="https://github.com/Akhilesh-va" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-white transition-colors group cursor-pointer w-fit">
+                                <Github size={16} className="text-secondary group-hover:text-primary transition-colors" />
+                                <span>GitHub</span>
+                            </a>
+                            <div className="flex items-center gap-3 text-gray-400 mt-1">
+                                <span className="text-primary font-bold">Location:</span> Noida, India
+                            </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                            <a href="mailto:akhileshbltr2002@gmail.com" className="flex items-center justify-center gap-2 px-6 py-2 bg-primary text-zinc-950 font-bold rounded-lg hover:bg-primary/90 transition-all glow-green">
+                                <Send size={16} /> Send Message
+                            </a>
+                            <span className="text-gray-500 text-xs flex items-center gap-2">
+                                <Cpu size={14} /> System ready for new connections.
+                            </span>
+                        </div>
+                    </div>
+                );
+                break;
+            case 'clear':
+                setHistory([]);
+                return;
+            case 'sudo':
+                output = <div className="text-red-400">Nice try! You do not have root privileges.</div>;
+                break;
+            case '':
+                output = null;
+                break;
+            default:
+                output = <div className="text-red-400">Command not found: '{trimmedCmd}'. Type 'help' to see available commands.</div>;
+        }
+
+        setHistory(prev => [...prev, { command: cmd, output }]);
+    };
+
+    const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            if (input.trim()) {
+                setCommandHistory(prev => [...prev, input]);
+                setHistoryIndex(-1);
             }
-        }, 100);
-        return () => clearInterval(interval);
-    }, []);
+            processCommand(input);
+            setInput('');
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (commandHistory.length > 0) {
+                const nextIndex = historyIndex < commandHistory.length - 1 ? historyIndex + 1 : historyIndex;
+                setHistoryIndex(nextIndex);
+                setInput(commandHistory[commandHistory.length - 1 - nextIndex]);
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                const prevIndex = historyIndex - 1;
+                setHistoryIndex(prevIndex);
+                setInput(commandHistory[commandHistory.length - 1 - prevIndex]);
+            } else if (historyIndex === 0) {
+                setHistoryIndex(-1);
+                setInput('');
+            }
+        }
+    };
 
     return (
         <section className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col items-center justify-center relative">
@@ -31,79 +166,164 @@ export function ContactSection() {
                 </p>
             </div>
 
-            <div className="w-full max-w-3xl glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 z-10 flex flex-col">
-                {/* Terminal Header */}
-                <div className="h-12 bg-black/40 border-b border-white/10 flex items-center px-4 justify-between">
-                    <div className="flex gap-2">
-                        <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                        <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                        <div className="w-3 h-3 rounded-full bg-green-500/80" />
+            <div className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-stretch justify-center gap-6 lg:gap-8 z-10 perspective-[1000px]">
+                {/* Left Side: Terminal */}
+                <div className="w-full lg:w-2/3 max-w-4xl glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col h-[500px]">
+                    {/* Terminal Header */}
+                    <div className="h-12 bg-black/40 border-b border-white/10 flex items-center px-4 justify-between shrink-0">
+                        <div className="flex gap-2">
+                            <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                            <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                            <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-400 font-mono text-xs sm:text-sm">
+                            <Terminal size={14} /> akhilesh@portfolio ~ zsh
+                        </div>
+                        <div className="w-16" /> {/* Spacer */}
                     </div>
-                    <div className="flex items-center gap-2 text-gray-500 font-mono text-sm">
-                        <Terminal size={14} /> terminal ~ bash
+
+                    {/* Terminal Body */}
+                    <div
+                        ref={scrollRef}
+                        className="p-4 sm:p-6 font-mono text-sm sm:text-base flex-1 overflow-y-auto cursor-text bg-[#0A0F1A] overscroll-contain"
+                        onClick={handleTerminalClick}
+                        onWheel={(e) => e.stopPropagation()}
+                        onTouchMove={(e) => e.stopPropagation()}
+                        data-lenis-prevent
+                    >
+                        {/* Command History */}
+                        <div className="flex flex-col gap-4">
+                            {history.map((record, i) => (
+                                <div key={i} className="flex flex-col">
+                                    {record.command !== 'welcome' && (
+                                        <div className="flex items-center mb-1">
+                                            <span className="text-blue-400 font-bold mr-2 shrink-0">akhilesh@macbook</span>
+                                            <span className="text-[#3DDC84] mr-2 shrink-0">➜</span>
+                                            <span className="text-gray-400 mr-2 shrink-0">~/portfolio</span>
+                                            <span className="text-white break-all">{record.command}</span>
+                                        </div>
+                                    )}
+                                    {record.output && (
+                                        <div className="ml-0 sm:ml-[2px]">{record.output}</div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Active Input Line */}
+                        <div className="flex items-start mt-4">
+                            <div className="flex items-center shrink-0 pt-[2px] sm:pt-0">
+                                <span className="text-blue-400 font-bold mr-2 hidden sm:inline">akhilesh@macbook</span>
+                                <span className="text-[#3DDC84] mr-2">➜</span>
+                                <span className="text-gray-400 mr-2">~/portfolio</span>
+                            </div>
+                            <input
+                                ref={inputRef}
+                                type="text"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={handleKeyDown}
+                                className="bg-transparent border-none outline-none text-white w-full flex-1 caret-white break-all"
+                                spellCheck={false}
+                                autoComplete="off"
+                                autoFocus
+                            />
+                        </div>
                     </div>
-                    <div className="w-16" /> {/* Spacer */}
                 </div>
 
-                {/* Terminal Body */}
-                <div className="p-6 md:p-8 font-mono text-sm md:text-base min-h-[350px] flex flex-col">
-                    <div className="flex items-center text-primary mb-2">
-                        <span className="text-blue-400 font-bold mr-2">akhilesh@macbook</span> <span className="text-gray-400">~/portfolio</span>
+                {/* Right Side: Commands Sidebar */}
+                <div className="w-full lg:w-1/3 glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col h-[500px] bg-black/40 backdrop-blur-md">
+                    <div className="h-12 border-b border-white/10 flex items-center px-6 gap-3">
+                        <Command size={16} className="text-secondary" />
+                        <span className="text-white font-medium text-sm tracking-wide">Available Commands</span>
                     </div>
 
-                    <div className="text-white flex mb-6">
-                        <span className="mr-2 text-primary">{typedCommand}</span>
-                        {!showResult && (
-                            <motion.span
-                                animate={{ opacity: [1, 0] }}
-                                transition={{ repeat: Infinity, duration: 0.8 }}
-                                className="w-2.5 h-5 bg-primary block"
-                            />
-                        )}
-                    </div>
+                    <div className="flex-1 p-6 flex flex-col gap-3 font-mono text-sm overflow-y-auto" data-lenis-prevent>
+                        {[
+                            { cmd: 'whoami', desc: 'Background info' },
+                            { cmd: 'skills', desc: 'Technical profile' },
+                            { cmd: 'contact', desc: 'Get in touch' },
+                            { cmd: 'hire', desc: 'Init parameters' },
+                            { cmd: 'help', desc: 'Show all commands' },
+                            { cmd: 'clear', desc: 'Clear terminal' }
+                        ].map((item, idx) => {
+                            const isTyping = input.trim().toLowerCase() === item.cmd ||
+                                (input.trim().length > 0 && item.cmd.startsWith(input.trim().toLowerCase()));
 
-                    <AnimatePresence>
-                        {showResult && (
-                            <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="flex-1 flex flex-col text-gray-300"
-                            >
-                                <div className="mb-4 text-[#b3a394]">Executing profile initialization... [OK]</div>
-                                <div className="mb-6">Contact parameters loaded successfully:</div>
-
-                                <div className="flex flex-col gap-4 mb-10">
-                                    <a href="mailto:akhileshbltr2002@gmail.com" className="flex items-center gap-4 hover:text-white transition-colors group cursor-pointer w-fit">
-                                        <Mail size={18} className="text-secondary group-hover:text-primary transition-colors" />
-                                        <span>akhileshbltr2002@gmail.com</span>
-                                    </a>
-
-                                    <a href="https://linkedin.com/in/akhileshsinghmaurya" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:text-white transition-colors group cursor-pointer w-fit">
-                                        <Linkedin size={18} className="text-secondary group-hover:text-primary transition-colors" />
-                                        <span>LinkedIn</span>
-                                    </a>
-                                    <a href="https://github.com/Akhilesh-va" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 hover:text-white transition-colors group cursor-pointer w-fit">
-                                        <Github size={18} className="text-secondary group-hover:text-primary transition-colors" />
-                                        <span>GitHub</span>
-                                    </a>
-                                    <div className="flex items-center gap-4 text-gray-400 mt-2">
-                                        <span className="text-primary font-bold">Location:</span> Noida, India
+                            return (
+                                <motion.div
+                                    key={item.cmd}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: idx * 0.1, duration: 0.4 }}
+                                    className={`relative p-3 rounded-lg border transition-all duration-300 flex flex-col gap-1 overflow-hidden ${isTyping
+                                        ? 'border-primary/50 bg-primary/10 pl-6 shadow-[0_0_15px_rgba(61,220,132,0.15)] glow-green'
+                                        : 'border-white/5 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                                        }`}
+                                >
+                                    {isTyping && (
+                                        <motion.div
+                                            layoutId="active-indicator"
+                                            className="absolute left-0 top-0 bottom-0 w-1 bg-primary"
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            transition={{ duration: 0.2 }}
+                                        />
+                                    )}
+                                    <div className="flex items-center justify-between">
+                                        <span className={`font-bold transition-colors duration-300 ${isTyping ? 'text-primary' : 'text-gray-300'}`}>
+                                            {item.cmd}
+                                        </span>
+                                        {isTyping && input.trim().toLowerCase() === item.cmd && (
+                                            <span className="text-xs text-primary font-sans animate-pulse">Press Enter ↵</span>
+                                        )}
                                     </div>
-                                </div>
-
-                                <div className="mt-auto flex flex-col md:flex-row items-center gap-6 border-t border-zinc-800 pt-6">
-                                    <a href="mailto:akhileshbltr2002@gmail.com" className="flex items-center justify-center gap-2 w-full md:w-auto px-8 py-3 bg-primary text-zinc-950 font-bold rounded-lg hover:bg-primary/90 transition-all glow-green">
-                                        <Send size={18} /> Send Message
-                                    </a>
-                                    <span className="text-gray-500 text-xs flex items-center gap-2">
-                                        <Cpu size={14} /> System ready for new connections.
-                                    </span>
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
+                                    <span className="text-gray-500 text-xs font-sans">{item.desc}</span>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
                 </div>
             </div>
+
+            {/* Static Contact Links */}
+            <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="w-full max-w-4xl mx-auto mt-20 flex flex-col items-center z-10"
+            >
+                <h3 className="text-xl text-gray-400 font-medium mb-8">Prefer the classic way?</h3>
+                <div className="flex flex-wrap justify-center gap-6">
+                    <a
+                        href="mailto:akhileshbltr2002@gmail.com"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                    >
+                        <Mail size={20} className="text-secondary group-hover:text-primary transition-colors" />
+                        <span className="font-medium">Email Me</span>
+                    </a>
+                    <a
+                        href="https://linkedin.com/in/akhileshsinghmaurya"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                    >
+                        <Linkedin size={20} className="text-secondary group-hover:text-primary transition-colors" />
+                        <span className="font-medium">LinkedIn</span>
+                    </a>
+                    <a
+                        href="https://github.com/Akhilesh-va"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                    >
+                        <Github size={20} className="text-secondary group-hover:text-primary transition-colors" />
+                        <span className="font-medium">GitHub</span>
+                    </a>
+                </div>
+            </motion.div>
 
             <footer className="w-full mt-32 border-t border-zinc-800 pt-8 pb-4 text-center text-gray-500 text-sm z-10">
                 <p>© {new Date().getFullYear()} Akhilesh S. Built with React, Tailwind & Framer Motion.</p>

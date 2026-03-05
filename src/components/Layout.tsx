@@ -7,6 +7,12 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
     useEffect(() => {
+        // Force scroll to top on reload
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+
         const lenis = new Lenis({
             autoRaf: true,
             duration: 1.2,
