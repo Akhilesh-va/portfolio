@@ -55,12 +55,12 @@ export function Hero() {
                 .to([badgeRef.current, descRef.current, buttonsRef.current], {
                     y: -100, opacity: 0, duration: 1, stagger: 0.05, ease: "power1.inOut"
                 }, 0)
-                // 2. The main text dramatically splits horizontally, shrinks, and blurs!
+                // 2. The main text dramatically splits horizontally, shrinks!
                 .to(text1Ref.current, {
-                    x: "-15vw", y: "-10vh", scale: 0.8, opacity: 0, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut"
+                    x: "-15vw", y: "-10vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut"
                 }, 0)
                 .to(text2Ref.current, {
-                    x: "15vw", y: "0vh", scale: 0.8, opacity: 0, filter: "blur(15px)", duration: 1.5, ease: "power2.inOut"
+                    x: "15vw", y: "0vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut"
                 }, 0)
                 // 3. Background orbs expand dramatically
                 .to('.bg-orb-1', { scale: 3, opacity: 0.8, duration: 2 }, 0)
@@ -119,7 +119,7 @@ export function Hero() {
                     {/* Cool, Dramatic Splitting Header */}
                     <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 leading-[1.1] pb-2 overflow-visible relative flex flex-col items-center uppercase">
                         <div ref={text1Ref} className="will-change-transform inline-block origin-center relative z-20 bg-background/40 rounded-2xl backdrop-blur-sm px-4">Akhilesh Singh</div>
-                        <span ref={text2Ref} className="inline-block block text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_40px_rgba(248,112,96,0.3)] will-change-transform pb-4 pr-6 pl-6 mt-[-10px] origin-center relative bg-background/40 rounded-2xl backdrop-blur-sm">
+                        <span ref={text2Ref} className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_40px_rgba(248,112,96,0.3)] will-change-transform pb-4 pr-6 pl-6 mt-[-10px] origin-center relative bg-background/40 rounded-2xl backdrop-blur-sm">
                             Maurya
                         </span>
                     </h1>
