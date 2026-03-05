@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { motion } from 'framer-motion';
@@ -15,7 +15,7 @@ export function Hero() {
     const buttonsRef = useRef<HTMLDivElement>(null);
     const badgeRef = useRef<HTMLAnchorElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         let ctx = gsap.context(() => {
             // Initial Load Animation (Cinematic reveal)
             const initTl = gsap.timeline();
@@ -52,19 +52,19 @@ export function Hero() {
 
             scrollTl
                 // 1. Elements fade out and move up elegantly
-                .to([badgeRef.current, descRef.current, buttonsRef.current], {
-                    y: -100, opacity: 0, duration: 1, stagger: 0.05, ease: "power1.inOut"
-                }, 0)
+                .fromTo([badgeRef.current, descRef.current, buttonsRef.current],
+                    { y: 0, opacity: 1 },
+                    { y: -100, opacity: 0, duration: 1, stagger: 0.05, ease: "power1.inOut" }, 0)
                 // 2. The main text dramatically splits horizontally, shrinks!
-                .to(text1Ref.current, {
-                    x: "-15vw", y: "-10vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut"
-                }, 0)
-                .to(text2Ref.current, {
-                    x: "15vw", y: "0vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut"
-                }, 0)
+                .fromTo(text1Ref.current,
+                    { x: "0vw", y: "0vh", scale: 1, opacity: 1 },
+                    { x: "-15vw", y: "-10vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
+                .fromTo(text2Ref.current,
+                    { x: "0vw", y: "0vh", scale: 1, opacity: 1 },
+                    { x: "15vw", y: "0vh", scale: 0.8, opacity: 0, duration: 1.5, ease: "power2.inOut" }, 0)
                 // 3. Background orbs expand dramatically
-                .to('.bg-orb-1', { scale: 3, opacity: 0.8, duration: 2 }, 0)
-                .to('.bg-orb-2', { scale: 3.5, opacity: 0.6, duration: 2 }, 0);
+                .fromTo('.bg-orb-1', { scale: 1, opacity: 0.3 }, { scale: 3, opacity: 0.8, duration: 2 }, 0)
+                .fromTo('.bg-orb-2', { scale: 1, opacity: 0.2 }, { scale: 3.5, opacity: 0.6, duration: 2 }, 0);
 
         }, sectionRef);
 
