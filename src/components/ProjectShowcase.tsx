@@ -95,22 +95,22 @@ function TiltCard({ project, onClick }: { project: typeof projects[0], onClick: 
             onMouseLeave={handleMouseLeave}
             onClick={onClick}
             style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-            className="relative w-[320px] h-[600px] rounded-[2rem] bg-black/40 border border-white/10 cursor-pointer shadow-2xl transition-colors duration-300 hover:border-primary/50 group"
+            className="relative w-[320px] h-[600px] rounded-[2rem] bg-text/5 dark:bg-black/40 border border-text/10 dark:border-white/10 cursor-pointer shadow-2xl transition-colors duration-300 hover:border-primary/50 group"
         >
             {/* Phone Screen Notch */}
-            <div className="absolute top-0 inset-x-0 h-6 bg-white/10 rounded-b-xl w-32 mx-auto z-20" />
+            <div className="absolute top-0 inset-x-0 h-6 bg-text/10 dark:bg-white/10 rounded-b-xl w-32 mx-auto z-20 transition-colors" />
 
             {/* Mockup Image Layer */}
             <div
                 style={{ transform: "translateZ(30px)" }}
-                className="absolute inset-0 m-2 rounded-[1.5rem] overflow-hidden bg-zinc-950"
+                className="absolute inset-0 m-2 rounded-[1.5rem] overflow-hidden bg-text/5 dark:bg-zinc-950 transition-colors"
             >
                 <img
                     src={project.mockup}
                     alt={project.title}
                     className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 dark:from-black dark:via-black/40 to-transparent transition-colors" />
             </div>
 
             {/* Content Layer over Image */}
@@ -118,11 +118,11 @@ function TiltCard({ project, onClick }: { project: typeof projects[0], onClick: 
                 style={{ transform: "translateZ(60px)" }}
                 className="absolute bottom-0 inset-x-0 p-6 flex flex-col pointer-events-none"
             >
-                <h3 className="text-2xl font-bold text-white mb-2 leading-tight">{project.title}</h3>
-                <p className="text-sm text-gray-300 mb-4 line-clamp-3 leading-relaxed">{project.description}</p>
+                <h3 className="text-2xl font-bold text-text dark:text-white mb-2 leading-tight transition-colors">{project.title}</h3>
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-3 leading-relaxed transition-colors">{project.description}</p>
                 <div className="flex flex-wrap gap-2">
                     {project.tags.slice(0, 3).map(tag => (
-                        <span key={tag} className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded bg-white/10 text-white backdrop-blur-sm">
+                        <span key={tag} className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded bg-text/5 dark:bg-white/10 text-text dark:text-white border border-text/10 dark:border-transparent backdrop-blur-sm transition-colors">
                             {tag}
                         </span>
                     ))}
@@ -142,12 +142,12 @@ export function ProjectShowcase() {
     const selectedProject = projects.find(p => p.id === selectedId);
 
     return (
-        <section id="projects" className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col relative">
+        <section id="projects" className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col relative transition-colors duration-300">
             <div className="text-center mb-16 z-10">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+                <h2 className="text-4xl md:text-5xl font-bold text-text dark:text-white mb-4 transition-colors">
                     Featured <span className="text-primary">Projects</span>
                 </h2>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto transition-colors">
                     Deep dives into complex challenges and their robust architectural solutions.
                 </p>
             </div>
@@ -169,17 +169,17 @@ export function ProjectShowcase() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            className="absolute inset-0 bg-black/80 backdrop-blur-sm pointer-events-auto"
+                            className="absolute inset-0 bg-background/80 dark:bg-black/80 backdrop-blur-sm pointer-events-auto transition-colors"
                             onClick={() => setSelectedId(null)}
                         />
 
                         <motion.div
                             layoutId={`project-container-${selectedProject.id}`}
-                            className="w-full max-w-5xl max-h-[90vh] bg-background overflow-y-auto overflow-hidden rounded-3xl z-10 pointer-events-auto flex flex-col lg:flex-row relative border border-white/10 shadow-2xl"
+                            className="w-full max-w-5xl max-h-[90vh] bg-background overflow-y-auto overflow-hidden rounded-3xl z-10 pointer-events-auto flex flex-col lg:flex-row relative border border-text/10 dark:border-white/10 shadow-2xl transition-colors"
                         >
                             <button
                                 onClick={() => setSelectedId(null)}
-                                className="absolute top-6 right-6 z-20 w-10 h-10 bg-black/50 hover:bg-black rounded-full flex items-center justify-center text-white backdrop-blur-md transition-colors"
+                                className="absolute top-6 right-6 z-20 w-10 h-10 bg-text/10 hover:bg-text/20 dark:bg-black/50 dark:hover:bg-black rounded-full flex items-center justify-center text-text dark:text-white backdrop-blur-md transition-colors"
                             >
                                 <X size={20} />
                             </button>
@@ -187,18 +187,18 @@ export function ProjectShowcase() {
                             {/* Left Side: Huge Mockup */}
                             <div className="w-full lg:w-2/5 h-[400px] lg:h-auto relative">
                                 <img src={selectedProject.mockup} alt={selectedProject.title} className="absolute inset-0 w-full h-full object-cover" />
-                                <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-zinc-900 lg:bg-gradient-to-t" />
+                                <div className="absolute inset-0 bg-gradient-to-r from-background/20 to-background lg:bg-gradient-to-t dark:from-black/20 dark:to-zinc-900 transition-colors" />
                             </div>
 
                             {/* Right Side: Details */}
                             <div className="w-full lg:w-3/5 p-6 lg:p-8 flex flex-col">
-                                <h3 className="text-3xl font-bold text-white mb-2" style={{ color: selectedProject.color }}>
+                                <h3 className="text-3xl font-bold text-text dark:text-white mb-2 transition-colors" style={{ color: selectedProject.color }}>
                                     {selectedProject.title}
                                 </h3>
 
                                 <div className="flex flex-wrap gap-2 mb-5">
                                     {selectedProject.tags.map(tag => (
-                                        <span key={tag} className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded bg-white/5 text-gray-300 border border-white/10">
+                                        <span key={tag} className="text-[10px] uppercase font-bold tracking-wider px-2 py-1 rounded bg-text/5 dark:bg-white/5 text-gray-600 dark:text-gray-300 border border-text/10 dark:border-white/10 transition-colors">
                                             {tag}
                                         </span>
                                     ))}
@@ -206,26 +206,26 @@ export function ProjectShowcase() {
 
                                 <div className="space-y-5 flex-1">
                                     <section>
-                                        <h4 className="text-lg font-bold text-white flex items-center gap-2 mb-1.5">
+                                        <h4 className="text-lg font-bold text-text dark:text-white flex items-center gap-2 mb-1.5 transition-colors">
                                             <Zap size={18} className="text-primary" /> The Problem
                                         </h4>
-                                        <p className="text-gray-400 text-sm leading-relaxed">{selectedProject.problem}</p>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed transition-colors">{selectedProject.problem}</p>
                                     </section>
 
                                     <section>
-                                        <h4 className="text-lg font-bold text-white flex items-center gap-2 mb-1.5">
+                                        <h4 className="text-lg font-bold text-text dark:text-white flex items-center gap-2 mb-1.5 transition-colors">
                                             <Layers size={18} className="text-secondary" /> Architecture
                                         </h4>
-                                        <p className="text-gray-400 text-sm leading-relaxed">{selectedProject.architecture}</p>
+                                        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed transition-colors">{selectedProject.architecture}</p>
                                     </section>
 
                                     <section>
-                                        <h4 className="text-lg font-bold text-white flex items-center gap-2 mb-1.5">
+                                        <h4 className="text-lg font-bold text-text dark:text-white flex items-center gap-2 mb-1.5 transition-colors">
                                             <Smartphone size={18} className="text-[#b3a394]" /> Key Highlights & Impact
                                         </h4>
                                         <ul className="space-y-2">
                                             {selectedProject.metrics.map((metric, i) => (
-                                                <li key={i} className="flex items-start gap-2 text-gray-300 text-sm">
+                                                <li key={i} className="flex items-start gap-2 text-gray-600 dark:text-gray-300 text-sm transition-colors">
                                                     <Check size={16} className="text-primary mt-0.5 flex-shrink-0" />
                                                     <span className="leading-snug">{metric}</span>
                                                 </li>
@@ -240,16 +240,16 @@ export function ProjectShowcase() {
                                             <ExternalLink size={16} /> View on Play Store
                                         </a>
                                     ) : (
-                                        <button className="flex items-center gap-2 px-4 py-2 bg-white text-black text-sm font-bold rounded-lg hover:bg-gray-200 transition-colors">
+                                        <button className="flex items-center gap-2 px-4 py-2 bg-text border border-text/10 dark:border-transparent dark:bg-white text-background dark:text-black text-sm font-bold rounded-lg hover:bg-text/80 dark:hover:bg-gray-200 transition-colors">
                                             <ExternalLink size={16} /> View Case Study
                                         </button>
                                     )}
                                     {(selectedProject as any).github ? (
-                                        <a href={(selectedProject as any).github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors">
+                                        <a href={(selectedProject as any).github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2 bg-text/10 dark:bg-zinc-800 text-text dark:text-white text-sm font-medium rounded-lg hover:bg-text/20 dark:hover:bg-zinc-700 transition-colors">
                                             <Github size={16} /> View Source
                                         </a>
                                     ) : (
-                                        <button className="flex items-center gap-2 px-4 py-2 bg-zinc-800 text-white text-sm font-medium rounded-lg hover:bg-zinc-700 transition-colors">
+                                        <button className="flex items-center gap-2 px-4 py-2 bg-text/10 dark:bg-zinc-800 text-text dark:text-white text-sm font-medium rounded-lg hover:bg-text/20 dark:hover:bg-zinc-700 transition-colors">
                                             <Github size={16} /> Source
                                         </button>
                                     )}

@@ -105,26 +105,26 @@ export function Hero() {
                         href={resumePdf}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="will-change-transform inline-block px-4 py-1.5 mb-8 border border-white/10 bg-white/5 rounded-full backdrop-blur-md hover:bg-white/10 transition-colors cursor-pointer group"
+                        className="will-change-transform inline-block px-4 py-1.5 mb-8 border border-text/10 dark:border-white/10 bg-text/5 dark:bg-white/5 rounded-full backdrop-blur-md hover:bg-text/10 dark:hover:bg-white/10 transition-colors cursor-pointer group"
                     >
-                        <span className="text-sm font-semibold tracking-widest text-primary uppercase flex items-center gap-3 group-hover:text-white transition-colors">
+                        <span className="text-sm font-semibold tracking-widest text-primary uppercase flex items-center gap-3 group-hover:text-text dark:group-hover:text-white transition-colors">
                             <span className="relative flex h-2.5 w-2.5">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary group-hover:bg-white transition-colors"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary group-hover:bg-text dark:group-hover:bg-white transition-colors"></span>
                             </span>
                             Resume
                         </span>
                     </a>
 
                     {/* Cool, Dramatic Splitting Header */}
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-white mb-6 leading-[1.1] pb-2 overflow-visible relative flex flex-col items-center uppercase">
+                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter text-text dark:text-white mb-6 leading-[1.1] pb-2 overflow-visible relative flex flex-col items-center uppercase transition-colors">
                         <div ref={text1Ref} className="will-change-transform inline-block origin-center relative z-20 bg-background/40 rounded-2xl backdrop-blur-sm px-4">Akhilesh Singh</div>
-                        <span ref={text2Ref} className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-white to-secondary drop-shadow-[0_0_40px_rgba(248,112,96,0.3)] will-change-transform pb-4 pr-6 pl-6 mt-[-10px] origin-center relative bg-background/40 rounded-2xl backdrop-blur-sm">
+                        <span ref={text2Ref} className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-accent dark:via-white to-secondary drop-shadow-[0_0_40px_rgba(248,112,96,0.3)] will-change-transform pb-4 pr-6 pl-6 mt-[-10px] origin-center relative bg-background/40 rounded-2xl backdrop-blur-sm transition-colors">
                             Maurya
                         </span>
                     </h1>
 
-                    <h2 ref={descRef} className="will-change-transform text-2xl md:text-3xl text-white font-bold mb-4 tracking-wide">
+                    <h2 ref={descRef} className="will-change-transform text-2xl md:text-3xl text-text dark:text-white font-bold mb-4 tracking-wide transition-colors">
                         Android Systems Engineer
                     </h2>
 
@@ -132,8 +132,8 @@ export function Hero() {
                         Kotlin · Jetpack Compose · Clean Architecture · Real-Time Systems
                     </p>
 
-                    <p className="will-change-transform text-lg text-gray-400 max-w-2xl mb-12 leading-relaxed font-light">
-                        From AI-powered ride booking to scalable social platforms — <span className="text-white font-medium">built to ship.</span>
+                    <p className="will-change-transform text-lg text-gray-600 dark:text-gray-400 max-w-2xl mb-12 leading-relaxed font-light transition-colors">
+                        From AI-powered ride booking to scalable social platforms — <span className="text-text dark:text-white font-medium">built to ship.</span>
                     </p>
 
                     <div ref={buttonsRef} className="will-change-transform flex flex-col sm:flex-row gap-6 justify-center w-full max-w-md mx-auto">
@@ -152,7 +152,7 @@ export function Hero() {
                             href="https://linktr.ee/v.a._.akhill"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-8 py-5 bg-white/5 text-white text-lg font-medium rounded-full border border-white/10 hover:bg-white/15 backdrop-blur-md transition-all flex-1 text-center hover:border-white/30 flex items-center justify-center"
+                            className="px-8 py-5 bg-text/5 dark:bg-white/5 text-text dark:text-white text-lg font-medium rounded-full border border-text/10 dark:border-white/10 hover:bg-text/10 dark:hover:bg-white/15 backdrop-blur-md transition-all flex-1 text-center hover:border-text/30 dark:hover:border-white/30 flex items-center justify-center"
                         >
                             Contact Me
                         </a>
@@ -176,7 +176,7 @@ export function Hero() {
                 </motion.div>
 
                 {/* Subdued Grid Background */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_20%,transparent_100%)] pointer-events-none z-0" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] dark:bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:100px_100px] [mask-image:radial-gradient(ellipse_60%_60%_at_50%_40%,#000_20%,transparent_100%)] pointer-events-none z-0 transition-colors" />
             </div>
         </section>
     );

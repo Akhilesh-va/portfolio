@@ -58,26 +58,26 @@ export function ArchitectureFlow() {
 
     return (
         <section ref={containerRef} className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col relative overflow-hidden">
-            <div className="text-center mb-24 z-10">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            <div className="text-center mb-24 z-10 transition-colors duration-300">
+                <h2 className="text-4xl md:text-5xl font-bold text-text dark:text-white mb-4">
                     I Think in <span className="text-primary">Systems.</span>
                 </h2>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto font-mono mb-4 text-primary/80">
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-mono mb-4 text-primary/80">
                     UI → ViewModel → UseCase → Repository → DataSource
                 </p>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                     Clean Architecture. Unidirectional Data Flow.<br />
-                    <span className="text-white font-medium">Scalable. Testable. Maintainable.</span>
+                    <span className="text-text dark:text-white font-medium">Scalable. Testable. Maintainable.</span>
                 </p>
             </div>
 
             <div className="flex flex-col md:flex-row items-center justify-center gap-0 md:gap-4 flex-1 max-w-[1400px] mx-auto w-full z-10">
                 {nodes.map((node, i) => (
                     <div key={node.id} className="flex flex-col md:flex-row items-center group">
-                        <div className={`arch-node glass p-6 rounded-2xl border ${i === 0 ? 'border-primary shadow-[0_0_30px_rgba(248,112,96,0.1)]' : 'border-white/10'} flex flex-col items-center w-48 md:w-56 relative transition-all duration-300 hover:-translate-y-2 hover:border-primary/50`}>
-                            <node.icon size={44} className={`${i === 0 ? 'text-primary' : 'text-gray-400 group-hover:text-primary'} mb-4 transition-colors`} />
-                            <h3 className="text-xl font-bold text-white mb-1">{node.label}</h3>
-                            <p className="text-sm text-gray-500 font-mono text-center">{node.desc}</p>
+                        <div className={`arch-node glass p-6 rounded-2xl border ${i === 0 ? 'border-primary shadow-[0_0_30px_rgba(248,112,96,0.1)]' : 'border-text/10 dark:border-white/10'} flex flex-col items-center w-48 md:w-56 relative transition-all duration-300 hover:-translate-y-2 hover:border-primary/50`}>
+                            <node.icon size={44} className={`${i === 0 ? 'text-primary' : 'text-gray-600 dark:text-gray-400 group-hover:text-primary'} mb-4 transition-colors`} />
+                            <h3 className="text-xl font-bold text-text dark:text-white mb-1 transition-colors">{node.label}</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-500 font-mono text-center transition-colors">{node.desc}</p>
                         </div>
 
                         {i !== nodes.length - 1 && (

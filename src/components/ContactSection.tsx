@@ -156,27 +156,27 @@ export function ContactSection() {
     };
 
     return (
-        <section className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col items-center justify-center relative">
-            <div className="text-center mb-12 z-10">
-                <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+        <section className="w-full bg-background py-20 px-6 lg:px-24 flex flex-col items-center justify-center relative transition-colors duration-300">
+            <div className="text-center mb-12 z-10 transition-colors duration-300">
+                <h2 className="text-4xl md:text-5xl font-bold text-text dark:text-white mb-4">
                     Let's Build <span className="text-primary">Something That Ships.</span>
                 </h2>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+                <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
                     Open to Android and mobile-focused roles.
                 </p>
             </div>
 
             <div className="w-full max-w-6xl mx-auto flex flex-col lg:flex-row items-stretch justify-center gap-6 lg:gap-8 z-10 perspective-[1000px]">
                 {/* Left Side: Terminal */}
-                <div className="w-full lg:w-2/3 max-w-4xl glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col h-[500px]">
+                <div className="w-full lg:w-2/3 max-w-4xl glass rounded-2xl overflow-hidden shadow-2xl border border-text/10 dark:border-white/10 flex flex-col h-[500px] transition-colors">
                     {/* Terminal Header */}
-                    <div className="h-12 bg-black/40 border-b border-white/10 flex items-center px-4 justify-between shrink-0">
+                    <div className="h-12 bg-text/10 dark:bg-black/40 border-b border-text/10 dark:border-white/10 flex items-center px-4 justify-between shrink-0 transition-colors">
                         <div className="flex gap-2">
                             <div className="w-3 h-3 rounded-full bg-red-500/80" />
                             <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
                             <div className="w-3 h-3 rounded-full bg-green-500/80" />
                         </div>
-                        <div className="flex items-center gap-2 text-gray-400 font-mono text-xs sm:text-sm">
+                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 font-mono text-xs sm:text-sm transition-colors">
                             <Terminal size={14} /> akhilesh@portfolio ~ zsh
                         </div>
                         <div className="w-16" /> {/* Spacer */}
@@ -233,10 +233,10 @@ export function ContactSection() {
                 </div>
 
                 {/* Right Side: Commands Sidebar */}
-                <div className="w-full lg:w-1/3 glass rounded-2xl overflow-hidden shadow-2xl border border-white/10 flex flex-col h-[500px] bg-black/40 backdrop-blur-md">
-                    <div className="h-12 border-b border-white/10 flex items-center px-6 gap-3">
+                <div className="w-full lg:w-1/3 glass rounded-2xl overflow-hidden shadow-2xl border border-text/10 dark:border-white/10 flex flex-col h-[500px] bg-background/40 dark:bg-black/40 backdrop-blur-md transition-colors">
+                    <div className="h-12 border-b border-text/10 dark:border-white/10 flex items-center px-6 gap-3 transition-colors">
                         <Command size={16} className="text-secondary" />
-                        <span className="text-white font-medium text-sm tracking-wide">Available Commands</span>
+                        <span className="text-text dark:text-white font-medium text-sm tracking-wide transition-colors">Available Commands</span>
                     </div>
 
                     <div className="flex-1 p-6 flex flex-col gap-3 font-mono text-sm overflow-y-auto" data-lenis-prevent>
@@ -259,7 +259,7 @@ export function ContactSection() {
                                     transition={{ delay: idx * 0.1, duration: 0.4 }}
                                     className={`relative p-3 rounded-lg border transition-all duration-300 flex flex-col gap-1 overflow-hidden ${isTyping
                                         ? 'border-primary/50 bg-primary/10 pl-6 shadow-[0_0_15px_rgba(61,220,132,0.15)] glow-green'
-                                        : 'border-white/5 bg-white/5 hover:border-white/20 hover:bg-white/10'
+                                        : 'border-text/5 bg-text/5 hover:border-text/20 hover:bg-text/10 dark:border-white/5 dark:bg-white/5 dark:hover:border-white/20 dark:hover:bg-white/10'
                                         }`}
                                 >
                                     {isTyping && (
@@ -272,7 +272,7 @@ export function ContactSection() {
                                         />
                                     )}
                                     <div className="flex items-center justify-between">
-                                        <span className={`font-bold transition-colors duration-300 ${isTyping ? 'text-primary' : 'text-gray-300'}`}>
+                                        <span className={`font-bold transition-colors duration-300 ${isTyping ? 'text-primary' : 'text-gray-600 dark:text-gray-300'}`}>
                                             {item.cmd}
                                         </span>
                                         {isTyping && input.trim().toLowerCase() === item.cmd && (
@@ -295,11 +295,11 @@ export function ContactSection() {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="w-full max-w-4xl mx-auto mt-20 flex flex-col items-center z-10"
             >
-                <h3 className="text-xl text-gray-400 font-medium mb-8">Prefer the classic way?</h3>
+                <h3 className="text-xl text-gray-600 dark:text-gray-400 font-medium mb-8 transition-colors">Prefer the classic way?</h3>
                 <div className="flex flex-wrap justify-center gap-6">
                     <a
                         href="mailto:akhileshbltr2002@gmail.com"
-                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-text/5 border border-text/10 hover:bg-text/10 hover:border-primary/50 hover:text-primary dark:text-gray-300 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300 group"
                     >
                         <Mail size={20} className="text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium">Email Me</span>
@@ -308,7 +308,7 @@ export function ContactSection() {
                         href="https://linkedin.com/in/akhileshsinghmaurya"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-text/5 border border-text/10 hover:bg-text/10 hover:border-primary/50 hover:text-primary dark:text-gray-300 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300 group"
                     >
                         <Linkedin size={20} className="text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium">LinkedIn</span>
@@ -317,7 +317,7 @@ export function ContactSection() {
                         href="https://github.com/Akhilesh-va"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-primary/50 hover:text-primary transition-all duration-300 text-gray-300 group"
+                        className="flex items-center gap-3 px-6 py-3 rounded-full bg-text/5 border border-text/10 hover:bg-text/10 hover:border-primary/50 hover:text-primary dark:text-gray-300 text-gray-700 dark:bg-white/5 dark:border-white/10 dark:hover:bg-white/10 transition-all duration-300 group"
                     >
                         <Github size={20} className="text-secondary group-hover:text-primary transition-colors" />
                         <span className="font-medium">GitHub</span>
@@ -325,7 +325,7 @@ export function ContactSection() {
                 </div>
             </motion.div>
 
-            <footer className="w-full mt-32 border-t border-zinc-800 pt-8 pb-4 text-center text-gray-500 text-sm z-10">
+            <footer className="w-full mt-32 border-t border-text/10 dark:border-zinc-800 pt-8 pb-4 text-center text-gray-500 text-sm z-10 transition-colors duration-300">
                 <p>© {new Date().getFullYear()} Akhilesh S. Built with React, Tailwind & Framer Motion.</p>
             </footer>
         </section>
